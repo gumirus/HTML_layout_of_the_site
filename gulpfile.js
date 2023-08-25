@@ -1,4 +1,6 @@
 const gulp = require('gulp');
+const deploy = require('gulp-gh-pages');
+const ghPages = require('gh-pages'); // Добавляем gh-pages
 
 // Tasks
 require('./gulp/dev.js');
@@ -22,21 +24,19 @@ gulp.task(
 	)
 );
 
-gulp.task('server:dev', function () {
-    connect.server({
-        livereload: {
-            port: 35730 // Измените порт на неиспользуемый
-        }
+// Объединяем задачи deploy в одну
+gulp.task('deploy', function (cb) {
+  // Замените на имя вашего репозитория и путь к сборке вашего проекта
+  const deployPath = './build';
+
+  // Развертываем на GitHub Pages с использованием gulp-gh-pages
+  return gulp.src(deployPath + '/**/*')
+    .pipe(deploy({
+      remoteUrl: "https://github.com/gumirus/HTML_layout_of_the_site.git",
+      branch: "gh-pages"
+    }))
+    .on('error', function(err) {
+      console.log(err); // Выводим ошибки в консоль, если есть
+      cb(err); // Прерываем выполнение задачи при ошибке
     });
-});
-
-var gulp        = require('gulp');
-var deploy      = require('gulp-gh-pages');
-
-/**
- * Push build to gh-pages
- */
-gulp.task('deploy', function () {
-  return gulp.src("./dist/**/*")
-    .pipe(deploy())
 });
