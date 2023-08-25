@@ -21,3 +21,11 @@ gulp.task(
 		gulp.parallel('server:docs')
 	)
 );
+
+gulp.task('server:dev', function () {
+    connect.server({
+        livereload: {
+            port: 35730 // Измените порт на неиспользуемый
+        }
+    });
+});
