@@ -46,6 +46,8 @@
 		"@tarekraafat/autocomplete.js": "^10.2.7"
 	},
 	"scripts": {
+		"start": "node app",
+		"postinstall": "gulp default",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"build": "gulp"
